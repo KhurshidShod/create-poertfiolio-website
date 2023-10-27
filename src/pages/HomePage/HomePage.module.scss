@@ -1,0 +1,71 @@
+.home{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Playpen Sans';
+    background-color: black;
+    &__wrapper{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        gap: 1rem;
+        p{
+            font-size: 18px;
+            text-transform: uppercase;
+            color: pink;
+        }
+        &_maintxt{
+            max-width: 750px;
+            position: relative;
+            video{
+                width: 100%;
+                height: 100%;
+            }
+            h1{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 75px;
+                font-family: 'Anton';
+                mix-blend-mode: multiply;
+                color: #fff;
+            }
+        }
+        button{
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 24px;
+            font-family: 'Anton';
+            background-color: transparent;
+            border: 1px solid pink;
+            outline: none;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+            &::before{
+                content: '';
+                width: 0%;
+                height: 0%;
+                position: absolute;
+                top: 0%;
+                left: -100%;
+                background-color: pink;
+                mix-blend-mode: screen;
+                transform: rotate(45deg);
+                transition: .2s ease-in;
+            }
+            &:hover::before{
+                width: 350%;
+                height: 300%;
+            }
+        }
+    }
+}
