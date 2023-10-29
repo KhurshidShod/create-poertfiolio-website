@@ -63,6 +63,16 @@ const AdminLayout = () => {
           notificationOpen ? styles.open : null
         }`}
       >
+        {isFetching ? (
+          <div className={styles.notifications__loader}>
+            <div className="newtons-cradle">
+              <div className="newtons-cradle__dot"></div>
+              <div className="newtons-cradle__dot"></div>
+              <div className="newtons-cradle__dot"></div>
+              <div className="newtons-cradle__dot"></div>
+            </div>
+          </div>
+        ) : null}
         <h3 className={styles.nonClientHeader}>Non-client users</h3>
         {users.map((user) => (
           <NotificationCard
