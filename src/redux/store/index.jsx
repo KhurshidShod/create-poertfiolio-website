@@ -5,16 +5,25 @@ import experiencesQuery, {
 } from "../queries/experiences";
 import { Provider } from "react-redux";
 import usersQuery, { usersName, usersReducer } from "../queries/users";
+import educationsQuery, {
+  educationsName,
+  educationsReducer,
+} from "../queries/educations";
 
 const reducer = {
   [experiencesName]: experiencesReducer,
   [usersName]: usersReducer,
+  [educationsName]: educationsReducer,
 };
 
 const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([experiencesQuery.middleware, usersQuery.middleware])
+    getDefaultMiddleware().concat([
+      experiencesQuery.middleware,
+      usersQuery.middleware,
+      educationsQuery.middleware,
+    ]),
 });
 
 const StoreProvider = ({ children }) => {

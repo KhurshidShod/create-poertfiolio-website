@@ -19,6 +19,20 @@ const usersQuery = createApi({
         total: res.pagination.total,
       }),
     }),
+    getNonClientUsers: builder.query({
+      query: (params) => ({
+        headers: {
+          "Authorization": `Bearer ${Cookies.get("token")}`,
+        },
+        method: "GET",
+        url: "users",
+        params,
+      }),
+      transformResponse: (res) => ({
+        users: res.data.map((el) => ({ ...el, key: el._id })),
+        total: res.pagination.total,
+      }),
+    }),
     deleteUsers: builder.mutation({
       query: (id) => ({
         method: "DELETE",
@@ -28,6 +42,18 @@ const usersQuery = createApi({
         },
       }),
     }),
+    updateUserToRole: builder.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        url: `users/${id}`,
+        headers: {
+          "Authorization": `Bearer ${Cookies.get("token")}`,
+        },
+        params: {
+          role: 'client'
+        }
+      }),
+    }),
   }),
 });
 
@@ -35,4 +61,4 @@ const { reducer: usersReducer, reducerPath: usersName } = usersQuery;
 
 export { usersQuery as default, usersName, usersReducer };
 
-export const { useGetUsersQuery, useDeleteUsersMutation } = usersQuery;
+export const { useGetUsersQuery, useUpdateUserToRoleMutation, useGetNonClientUsersQuery, useDeleteUsersMutation } = usersQuery;

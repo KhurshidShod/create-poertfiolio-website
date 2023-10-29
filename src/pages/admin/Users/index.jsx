@@ -107,7 +107,7 @@ console.log(users)
   ];
   return (
     <div className={styles.users_wrapper}>
-        <h1>Users</h1>
+        <h1>Users ({total})</h1>
       <div className={styles.users_wrapper_header}>
         <Input onChange={(e) => {
           setSearch(e.target.value)

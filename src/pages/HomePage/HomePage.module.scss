@@ -36,6 +36,18 @@
                 font-family: 'Anton';
                 mix-blend-mode: multiply;
                 color: #fff;
+                @media (max-width: 790px) {
+                    font-size: 65px;
+                }
+                @media (max-width: 685px) {
+                    font-size: 56px;
+                }
+                @media (max-width: 599px) {
+                    font-size: 48px;
+                }
+                @media (max-width: 519px) {
+                    font-size: 28px;
+                }
             }
         }
         button{

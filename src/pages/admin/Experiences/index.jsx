@@ -22,11 +22,11 @@ import styles from "./AdminExperiencesPage.module.scss";
 const { RangePicker } = DatePicker;
 
 const AdminExperiencesPage = () => {
+  const [form] = Form.useForm();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [form] = Form.useForm();
   const [desc, setDesc] = useState({
     workName: "",
     companyName: "",
@@ -39,7 +39,6 @@ const AdminExperiencesPage = () => {
     refetch,
     isFetching,
   } = useGetExperiencesQuery({ page, limit: LIMIT, search });
-
   const [deleteExperience] = useDeleteExperiencesMutation();
   const [createExperience] = useCreateExperiencesMutation();
   const [editExperience] = useEditExperiencesMutation();
@@ -66,8 +65,8 @@ const AdminExperiencesPage = () => {
     setModalOpen(true);
     setSelected(id);
     const { data } = await getExperience(id);
-    console.log(fsts)
     form.setFieldsValue(data);
+    console.log(data)
   };
 
   const columns = [
@@ -75,11 +74,6 @@ const AdminExperiencesPage = () => {
       title: "Employer",
       dataIndex: "companyName",
       key: "companyName",
-    },
-    {
-      title: "Worked as",
-      dataIndex: "workName",
-      key: "workName",
     },
     {
       title: "Employee",
@@ -185,7 +179,7 @@ const AdminExperiencesPage = () => {
           </Form>
         </div>
       ) : null}
-      <h1>Experiences</h1>
+      <h1>Experiences ({total})</h1>
       <div className={styles.experiences_header}>
         <Input
           type="text"
