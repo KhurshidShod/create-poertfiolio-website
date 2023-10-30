@@ -9,7 +9,7 @@ import { IoNotificationsSharp } from "react-icons/io5";
 import {
   useGetNonClientUsersQuery,
   useGetUserMutation,
-  useUpdateUserToRoleMutation,
+  useUpdateUserMutation,
 } from "../../redux/queries/users";
 import styles from "./AdminLayout.module.scss";
 import NotificationCard from "../notificationCard";
@@ -24,7 +24,7 @@ const AdminLayout = () => {
   const [limit, setLimit] = useState(10);
   const [collapsed, setCollapsed] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
-  const [updateUser] = useUpdateUserToRoleMutation();
+  const [updateUser] = useUpdateUserMutation();
   const [changeLoading, setChangeLoading] = useState(false);
 
   const {
@@ -41,7 +41,7 @@ const AdminLayout = () => {
 
   const changeRole = async (id) => {
     const { data } = await getUser(id);
-    await updateUser(id).unwrap();
+    await updateUser(id, 'client').unwrap();
     refetch();
     toast.success(`${data.username} is now our client`)
   };

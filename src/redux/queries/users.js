@@ -51,15 +51,15 @@ const usersQuery = createApi({
         },
       }),
     }),
-    updateUserToRole: builder.mutation({
-      query: (id) => ({
-        method: "DELETE",
+    updateUser: builder.mutation({
+      query: (id, role) => ({
+        method: "PUT",
         url: `users/${id}`,
         headers: {
           "Authorization": `Bearer ${Cookies.get("token")}`,
         },
-        params: {
-          role: 'client'
+        body: {
+          role
         }
       }),
     }),
@@ -70,4 +70,4 @@ const { reducer: usersReducer, reducerPath: usersName } = usersQuery;
 
 export { usersQuery as default, usersName, usersReducer };
 
-export const { useGetUserMutation ,useGetUsersQuery, useUpdateUserToRoleMutation, useGetNonClientUsersQuery, useDeleteUsersMutation } = usersQuery;
+export const { useGetUserMutation ,useGetUsersQuery, useUpdateUserMutation, useGetNonClientUsersQuery, useDeleteUsersMutation } = usersQuery;
