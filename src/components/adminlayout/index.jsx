@@ -41,7 +41,7 @@ const AdminLayout = () => {
 
   const changeRole = async (id) => {
     const { data } = await getUser(id);
-    await updateUser(id, 'client').unwrap();
+    await updateUser(id).unwrap();
     refetch();
     toast.success(`${data.username} is now our client`)
   };

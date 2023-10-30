@@ -52,15 +52,15 @@ const usersQuery = createApi({
       }),
     }),
     updateUser: builder.mutation({
-      query: (id, role) => ({
+      query: (id) => ({
         method: "PUT",
         url: `users/${id}`,
+        body: {
+          role: 'client'
+        },
         headers: {
           "Authorization": `Bearer ${Cookies.get("token")}`,
         },
-        body: {
-          role
-        }
       }),
     }),
   }),
