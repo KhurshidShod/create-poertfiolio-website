@@ -8,10 +8,12 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { IoNotificationsSharp } from "react-icons/io5";
 import {
   useGetNonClientUsersQuery,
+  useGetUserMutation,
   useUpdateUserToRoleMutation,
 } from "../../redux/queries/users";
 import styles from "./AdminLayout.module.scss";
 import NotificationCard from "../notificationCard";
+import { toast } from "react-toastify";
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,6 +25,7 @@ const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [updateUser] = useUpdateUserToRoleMutation();
+  const [changeLoading, setChangeLoading] = useState(false);
 
   const {
     data: { users, total } = { users: [], total: 0 },
@@ -30,19 +33,21 @@ const AdminLayout = () => {
     isFetching,
     error,
   } = useGetNonClientUsersQuery({ page: 1, limit, role: "user" });
+  const [getUser] = useGetUserMutation();
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   const changeRole = async (id) => {
+    const { data } = await getUser(id);
     await updateUser(id).unwrap();
     refetch();
-    console.log(id);
+    toast.success(`${data.username} is now our client`)
   };
 
   const scrollPagination = (e) => {
-    if (error?.status !== 404) {
+    if (users.length !== total) {
       if (
         e.currentTarget.clientHeight + e.currentTarget.scrollTop + 1 >=
         e.currentTarget.scrollHeight
@@ -63,7 +68,7 @@ const AdminLayout = () => {
           notificationOpen ? styles.open : null
         }`}
       >
-        {isFetching ? (
+        {changeLoading ? (
           <div className={styles.notifications__loader}>
             <div className="newtons-cradle">
               <div className="newtons-cradle__dot"></div>
@@ -94,7 +99,7 @@ const AdminLayout = () => {
             <div className="typing-shadow"></div>
             <div className="typing-shadow"></div>
           </div>
-        ) : error?.status == 404 ? (
+        ) : users.length === total ? (
           <p
             style={{
               color: "white",
